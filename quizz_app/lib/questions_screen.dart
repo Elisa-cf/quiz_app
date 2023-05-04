@@ -11,9 +11,20 @@ class QuestionsScreen extends StatefulWidget {
 }
 
 class _QuestionsScreenState extends State<QuestionsScreen> {
+  var currentQuestionIndex = 0;
+
+  void answerQuestion() {
+    setState(() {
+      currentQuestionIndex++; //increments index by 1
+    });
+
+    //currentQuestionIndex += 1; increments the index by the number you want
+    //currentQuestionIndex = currentQuestionIndex + 1; increments the index by the number you want
+  }
+
   @override
   Widget build(BuildContext context) {
-    final currentQuestion = questions[0];
+    final currentQuestion = questions[currentQuestionIndex];
     return SizedBox(
       width: double.infinity,
       child: Container(
@@ -28,9 +39,10 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 30),
+            //chain the map into the getShuffleAnswers method without changing the original list
             ...currentQuestion.getShuffleAnswers().map((answer) => AnswerButton(
                   answerText: answer,
-                  onTap: () {},
+                  onTap: answerQuestion,
                 )),
           ],
         ),
