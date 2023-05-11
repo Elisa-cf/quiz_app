@@ -13,7 +13,7 @@ class Quiz extends StatefulWidget {
 }
 
 class _QuizState extends State<Quiz> {
-  final List<String> selectedAnswers = [];
+  List<String> selectedAnswers = [];
   //FIRST / THIRD WAY TO LIFT THE STATE UP WITH TERNARY OPERATORS:
   var activeScreen = 'start-screen';
 
@@ -25,10 +25,13 @@ class _QuizState extends State<Quiz> {
   }
 
   void chooseAnswer(String answer) {
+    //use the selectedAnswers state to show a diferent screen once all the questions have been answered.
     selectedAnswers.add(answer);
 
     if (selectedAnswers.length == questions.length) {
       setState(() {
+        //Once all the questions have been answered, we need to reset the selected answers back to an empty list
+        selectedAnswers = [];
         activeScreen = 'start-screen';
       });
     }
