@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quizz_app/data/questions.dart';
+import 'package:quizz_app/result_screen.dart';
 import 'package:quizz_app/start_screen.dart';
 import 'package:quizz_app/questions_screen.dart';
 
@@ -32,7 +33,7 @@ class _QuizState extends State<Quiz> {
       setState(() {
         //Once all the questions have been answered, we need to reset the selected answers back to an empty list
         selectedAnswers = [];
-        activeScreen = 'start-screen';
+        activeScreen = 'results-screen';
       });
     }
   }
@@ -55,7 +56,7 @@ class _QuizState extends State<Quiz> {
   @override
   Widget build(BuildContext context) {
     //THIRD WAY TO LIFT THE STATE THE MOST READABLE:
-    final screenWidget = activeScreen == 'start-screen'
+    var screenWidget = activeScreen == 'start-screen'
         ? StartScreen(switchScreen)
         : QuestionsScreen(onSelectAnswer: chooseAnswer);
 
@@ -64,6 +65,9 @@ class _QuizState extends State<Quiz> {
     if (activeScreen == 'questions-screen') {
       screenWidget = const QuestionsScreen();
     }*/
+    if (activeScreen == 'results-screen') {
+      screenWidget = const ResultScreen();
+    }
 
     return MaterialApp(
         home: Scaffold(
