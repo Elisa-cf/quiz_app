@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:quizz_app/data/questions.dart';
 import 'package:quizz_app/start_screen.dart';
 import 'package:quizz_app/questions_screen.dart';
+
+//LIFTING THE STATE UP, BEST WAYS THIRD AND FOURTH OPTION.
 
 class Quiz extends StatefulWidget {
   const Quiz({super.key});
@@ -10,13 +13,25 @@ class Quiz extends StatefulWidget {
 }
 
 class _QuizState extends State<Quiz> {
-  //FIRST WAY TO LIFT THE STATE UP WITH TERNARY OPERATORS, ALSO NEEDS TO BE USE FOR HTE THIRD OPTION:
+  final List<String> selectedAnswers = [];
+  //FIRST / THIRD WAY TO LIFT THE STATE UP WITH TERNARY OPERATORS:
   var activeScreen = 'start-screen';
 
+//METHODS:
   void switchScreen() {
     setState(() {
       activeScreen = 'question-screen';
     });
+  }
+
+  void chooseAnswer(String answer) {
+    selectedAnswers.add(answer);
+
+    if (selectedAnswers.length == questions.length) {
+      setState(() {
+        activeScreen = 'start-screen';
+      });
+    }
   }
 
   //SECOND WAY TO LIFT THE STATE UP WITH INITSTATE
@@ -39,9 +54,9 @@ class _QuizState extends State<Quiz> {
     //THIRD WAY TO LIFT THE STATE THE MOST READABLE:
     final screenWidget = activeScreen == 'start-screen'
         ? StartScreen(switchScreen)
-        : const QuestionsScreen();
+        : QuestionsScreen(onSelectAnswer: chooseAnswer);
 
-    /*FOURTH WAY USINF IF STATEMENT INSTEAD OF TERNARY:
+    /*FOURTH WAY USING IF STATEMENT INSTEAD OF TERNARY:
     Widget screenWidget = StartScreen(switchScreen);
     if (activeScreen == 'questions-screen') {
       screenWidget = const QuestionsScreen();
@@ -62,7 +77,7 @@ class _QuizState extends State<Quiz> {
           //  : const QuestionsScreen(),
           //SECOND WAY TO LIFT THE STATE UP WITH INITSTATE
           //child: activeScreen,
-          //THIRD WAY TO LIFT THE STATE THE MOST READABLE:
+          //THIRD WAY TO LIFT THE STATE THE MOST READABLE//ALSO USED FOR THE 4TH WAY WITH IF STATEMENT
           child: screenWidget),
     ));
   }
