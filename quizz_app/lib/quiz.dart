@@ -32,7 +32,7 @@ class _QuizState extends State<Quiz> {
     if (selectedAnswers.length == questions.length) {
       setState(() {
         //Once all the questions have been answered, we need to reset the selected answers back to an empty list
-        selectedAnswers = [];
+        // selectedAnswers = [];
         activeScreen = 'results-screen';
       });
     }
